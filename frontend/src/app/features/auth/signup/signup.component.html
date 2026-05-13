@@ -1,0 +1,88 @@
+<div class="auth-hero">
+  <h1 class="hero-title">Create your Eagle Bank profile</h1>
+  <p class="hero-subtitle">Your secure access to online banking</p>
+</div>
+
+<div class="auth-wrapper">
+  <mat-card class="auth-card">
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate autocomplete="off">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" placeholder="Your full name" />
+          <mat-error *ngIf="form.controls.name.touched && form.controls.name.invalid">Name is required</mat-error>
+        </mat-form-field>
+
+        <div class="grid-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Address line 1</mat-label>
+            <input matInput formControlName="line1" placeholder="Line 1" />
+            <mat-error *ngIf="form.controls.line1.touched && form.controls.line1.invalid">Line 1 is required</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Address line 2</mat-label>
+            <input matInput formControlName="line2" placeholder="Line 2 (optional)" />
+          </mat-form-field>
+        </div>
+
+        <div class="grid-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Address line 3</mat-label>
+            <input matInput formControlName="line3" placeholder="Line 3 (optional)" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Town</mat-label>
+            <input matInput formControlName="town" placeholder="Town" />
+            <mat-error *ngIf="form.controls.town.touched && form.controls.town.invalid">Required</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>County</mat-label>
+            <input matInput formControlName="county" placeholder="County" />
+            <mat-error *ngIf="form.controls.county.touched && form.controls.county.invalid">Required</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="grid-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Postcode</mat-label>
+            <input matInput formControlName="postcode" placeholder="Postcode" />
+            <mat-error *ngIf="form.controls.postcode.touched && form.controls.postcode.invalid">Required</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Phone (E.164)</mat-label>
+            <input matInput formControlName="phoneNumber" name="tel" placeholder="+441234567890" autocomplete="tel" inputmode="tel" />
+            <mat-error *ngIf="form.controls.phoneNumber.touched && form.controls.phoneNumber.invalid">Valid phone is required</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="grid-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" name="email" placeholder="you@example.com" type="email" autocomplete="email" autocapitalize="none" spellcheck="false" />
+            <mat-error *ngIf="form.controls.email.touched && form.controls.email.invalid">Enter a valid email</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" name="new-password" type="password" placeholder="Password" autocomplete="new-password" autocapitalize="none" spellcheck="false" />
+            <mat-error *ngIf="form.controls.password.touched && form.controls.password.invalid">Min 6 characters</mat-error>
+          </mat-form-field>
+        </div>
+
+        <button mat-raised-button color="primary" type="submit" class="full-width" [disabled]="submitting()">
+          <mat-icon>person_add</mat-icon>
+          <span>{{ submitting() ? 'Creating…' : 'Create account' }}</span>
+        </button>
+
+        <div class="messages">
+          <div *ngIf="errorMessage()" class="msg error">{{ errorMessage() }}</div>
+          <div *ngIf="successMessage()" class="msg success">{{ successMessage() }}</div>
+        </div>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions align="end" class="actions">
+      <span>Already have an account?</span>
+      <a mat-button routerLink="/login">Log in</a>
+    </mat-card-actions>
+  </mat-card>
+</div>

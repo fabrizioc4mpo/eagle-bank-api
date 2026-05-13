@@ -1,0 +1,150 @@
+<div class="auth-hero">
+  <h1 class="hero-title">Welcome back, {{ user()?.name || 'User' }}</h1>
+  <p class="hero-subtitle">Your Eagle Bank dashboard</p>
+</div>
+
+<div class="dashboard-container">
+  <!-- Left column: profile card (moved slightly to the left by layout) -->
+  <div class="profile-col">
+    <mat-card class="auth-card">
+      <mat-card-content>
+        <ng-container *ngIf="user(); else loadingTpl">
+          <div style="margin-bottom: 12px;">
+            <strong>Profile details</strong>
+          </div>
+
+          <!-- View mode -->
+          <ng-container *ngIf="!editing(); else editFormTpl">
+            <ul class="mat-body-medium" style="list-style: none; padding: 0; margin: 0;">
+              <li><strong>Name:</strong> {{ user()!.name }}</li>
+              <li><strong>Email:</strong> {{ user()!.email }}</li>
+              <li><strong>User ID:</strong> {{ user()!.id }}</li>
+              <li><strong>Phone:</strong> {{ user()!.phoneNumber }}</li>
+              <li><strong>Address:</strong>
+                <span>
+                  {{ formatAddress(user()!.address) }}
+                </span>
+              </li>
+              <li><strong>Password:</strong> ********</li>
+            </ul>
+            <mat-card-actions class="actions" style="margin-top: 16px; display: flex; gap: 12px;">
+              <button mat-stroked-button color="primary" type="button" (click)="startEdit()">
+                <mat-icon>edit</mat-icon>
+                <span>Update profile</span>
+              </button>
+              <button mat-raised-button color="warn" type="button" class="delete-btn" (click)="onDeleteAccount()">
+                <mat-icon color="warn">delete</mat-icon>
+                <span>Delete account</span>
+              </button>
+            </mat-card-actions>
+          </ng-container>
+
+          <!-- Edit mode -->
+          <ng-template #editFormTpl>
+            <form [formGroup]="form" (ngSubmit)="save()" class="profile-form">
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Name</mat-label>
+                  <input matInput formControlName="name" />
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Email</mat-label>
+                  <input matInput type="email" formControlName="email" />
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Phone number</mat-label>
+                  <input matInput formControlName="phoneNumber" />
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>New password (optional)</mat-label>
+                  <input matInput type="password" formControlName="password" />
+                </mat-form-field>
+              </div>
+
+              <div class="form-row two-cols">
+                <mat-form-field appearance="outline">
+                  <mat-label>Address line 1</mat-label>
+                  <input matInput formControlName="line1" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Address line 2</mat-label>
+                  <input matInput formControlName="line2" />
+                </mat-form-field>
+              </div>
+              <div class="form-row two-cols">
+                <mat-form-field appearance="outline">
+                  <mat-label>Address line 3</mat-label>
+                  <input matInput formControlName="line3" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Town</mat-label>
+                  <input matInput formControlName="town" />
+                </mat-form-field>
+              </div>
+              <div class="form-row two-cols">
+                <mat-form-field appearance="outline">
+                  <mat-label>County</mat-label>
+                  <input matInput formControlName="county" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Postcode</mat-label>
+                  <input matInput formControlName="postcode" />
+                </mat-form-field>
+              </div>
+
+              <mat-card-actions class="actions" style="margin-top: 8px; display: flex; gap: 12px;">
+                <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || saving()">
+                  <mat-icon>save</mat-icon>
+                  <span>{{ saving() ? 'Saving...' : 'Save changes' }}</span>
+                </button>
+                <button mat-stroked-button type="button" (click)="cancelEdit()">
+                  <mat-icon>close</mat-icon>
+                  <span>Cancel</span>
+                </button>
+              </mat-card-actions>
+            </form>
+          </ng-template>
+        </ng-container>
+        <ng-template #loadingTpl>
+          <div class="messages">
+            <div class="msg">Loading your profile…</div>
+          </div>
+        </ng-template>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Right column: account actions inside a Material card -->
+  <div class="accounts-col">
+    <mat-card class="auth-card">
+      <mat-card-header class="cta-header">
+        <div class="cta-header-text">
+          <div class="cta-title">Manage your accounts</div>
+          <div class="cta-subtitle">Check your existing accounts or create new ones</div>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <!-- Fill available vertical space and place one button near top and one near bottom -->
+        <div class="cta-fill">
+          <a mat-raised-button color="primary" class="big-cta" routerLink="/accounts">
+            <mat-icon>account_balance</mat-icon>
+            <span>View accounts</span>
+          </a>
+          <a mat-stroked-button color="accent" class="big-cta" routerLink="/accounts/new">
+            <mat-icon>add</mat-icon>
+            <span>Create account</span>
+          </a>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

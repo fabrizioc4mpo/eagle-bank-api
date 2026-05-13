@@ -1,0 +1,86 @@
+<div class="auth-hero">
+  <h1 class="hero-title">Account details</h1>
+  <p class="hero-subtitle">Overview of your bank account</p>
+</div>
+
+<div class="auth-wrapper">
+  <mat-card class="auth-card">
+    <!-- Top actions: Back to accounts -->
+    <mat-card-actions class="actions" align="start">
+      <a mat-stroked-button color="primary" routerLink="/accounts">
+        <mat-icon>arrow_back</mat-icon>
+        Back to accounts
+      </a>
+    </mat-card-actions>
+
+    <mat-card-content>
+      <ng-container *ngIf="!loading(); else loadingTpl">
+        <ng-container *ngIf="!error(); else errorTpl">
+          <ng-container *ngIf="account(); else emptyTpl">
+            <!-- Prominent balance banner -->
+            <div class="balance-banner">
+              <div class="balance-label">Balance</div>
+              <div class="balance-amount">{{ account()!.balance | number:'1.2-2' }} {{ account()!.currency }}</div>
+            </div>
+
+            <!-- Details laid out as requested: 3 columns with labels on top, values below -->
+            <div class="details-inline">
+              <div class="detail-col">
+                <div class="detail-label">Bank type</div>
+                <div class="detail-value">{{ account()!.accountType | titlecase }}</div>
+              </div>
+              <div class="detail-col">
+                <div class="detail-label">Account number</div>
+                <div class="detail-value">{{ account()!.accountNumber }}</div>
+              </div>
+              <div class="detail-col">
+                <div class="detail-label">Sort code</div>
+                <div class="detail-value">{{ account()!.sortCode }}</div>
+              </div>
+            </div>
+
+            <!-- Created/Updated as a compact two-column row below -->
+            <div class="details-meta">
+              <div class="detail-col">
+                <div class="detail-label">Created</div>
+                <div class="detail-value">{{ account()!.createdTimestamp | date:'medium' }}</div>
+              </div>
+              <div class="detail-col">
+                <div class="detail-label">Updated</div>
+                <div class="detail-value">{{ account()!.updatedTimestamp | date:'medium' }}</div>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+
+      <ng-template #loadingTpl>
+        <div class="messages"><div class="msg">Loading account…</div></div>
+      </ng-template>
+      <ng-template #errorTpl>
+        <div class="messages"><div class="msg error">{{ error() }}</div></div>
+      </ng-template>
+      <ng-template #emptyTpl>
+        <div class="messages"><div class="msg">No account found.</div></div>
+      </ng-template>
+    </mat-card-content>
+
+    <!-- Bottom actions: View transactions, Update details, Delete account (all in one row) -->
+    <mat-card-actions class="actions bottom-actions" align="end" *ngIf="account()">
+      <a mat-raised-button color="accent"
+         [routerLink]="['/accounts', account()!.accountNumber, 'transactions']"
+         aria-label="View transactions">
+        <mat-icon>receipt_long</mat-icon>
+        View transactions
+      </a>
+      <a mat-raised-button color="primary" [routerLink]="['/accounts', account()!.accountNumber, 'edit']" aria-label="Update account details">
+        <mat-icon>edit</mat-icon>
+        Update details
+      </a>
+      <button mat-button color="warn" class="delete-btn" (click)="onDelete()" [disabled]="deleting()" aria-label="Delete account">
+        <mat-icon color="warn">delete</mat-icon>
+        <span>{{ deleting() ? 'Deleting…' : 'Delete account' }}</span>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

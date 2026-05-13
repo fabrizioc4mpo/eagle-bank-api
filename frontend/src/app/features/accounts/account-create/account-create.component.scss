@@ -1,0 +1,12 @@
+/* Component-scoped styles for AccountsCreateComponent.
+   Note: Many layout classes (auth-hero, auth-wrapper, etc.) may already
+   be defined globally in src/styles.scss. Keep this file for future
+   component-specific overrides. */
+
+/* Example hooks (empty by default to avoid style changes): */
+.full-width {}
+.messages {}
+.messages .msg {}
+.messages .msg.error {}
+.messages .msg.success {}
+.actions {}

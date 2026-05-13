@@ -1,0 +1,43 @@
+<div class="auth-hero">
+  <h1 class="hero-title">Create new bank account</h1>
+  <p class="hero-subtitle">Set up a personal account to start banking</p>
+</div>
+
+<div class="auth-wrapper">
+  <mat-card class="auth-card">
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Account name</mat-label>
+          <input matInput formControlName="name" placeholder="e.g. Personal Bank Account" />
+          <mat-error *ngIf="form.controls.name.touched && form.controls.name.invalid">Name is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Account type</mat-label>
+          <mat-select formControlName="accountType">
+            <mat-option value="personal">Personal</mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.controls.accountType.touched && form.controls.accountType.invalid">Select an account type</mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" class="full-width" [disabled]="submitting()">
+          <mat-icon>add</mat-icon>
+          <span>{{ submitting() ? 'Creating…' : 'Create account' }}</span>
+        </button>
+
+        <div class="messages">
+          <div *ngIf="errorMessage()" class="msg error">{{ errorMessage() }}</div>
+          <div *ngIf="successMessage()" class="msg success">{{ successMessage() }}</div>
+        </div>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions class="actions" align="end">
+      <a mat-stroked-button routerLink="/accounts">
+        <mat-icon>arrow_back</mat-icon>
+        Back to accounts
+      </a>
+    </mat-card-actions>
+  </mat-card>
+</div>

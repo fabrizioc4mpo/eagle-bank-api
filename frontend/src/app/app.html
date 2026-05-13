@@ -1,0 +1,14 @@
+<mat-toolbar color="primary" class="app-toolbar">
+  <span class="brand"><span class="brand-mark">🦅</span> EagleBank</span>
+  <span class="spacer"></span>
+  <a mat-button routerLink="/login">Login</a>
+  <a mat-stroked-button color="accent" routerLink="/signup">Sign up</a>
+</mat-toolbar>
+
+<main class="app-main">
+  <router-outlet></router-outlet>
+  <footer class="app-footer">
+    <span>© {{ year }} EagleBank</span>
+  </footer>
+
+</main>

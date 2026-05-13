@@ -1,0 +1,97 @@
+/* Styles extracted from inline `styles` of AccountDetailComponent. */
+
+/* Ensure delete action text and icon appear red */
+.delete-btn,
+.delete-btn span,
+.delete-btn mat-icon {
+  color: #d32f2f !important; /* Material Red 700 */
+}
+
+/* Balance banner styling */
+.balance-banner {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  margin: 8px 0 20px;
+  background: linear-gradient(90deg, rgba(25,118,210,0.10), rgba(25,118,210,0.18));
+  border: 1px solid rgba(25, 118, 210, 0.24);
+  border-radius: 10px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
+}
+.balance-label {
+  font-size: 28px;
+  font-weight: 600;
+  color: #1565c0; /* primary darker */
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+.balance-amount {
+  margin-left: auto;
+  font-size: 32px;
+  line-height: 1.1;
+  font-weight: 700;
+  color: #0d47a1; /* primary darkest */
+}
+
+/* Make the card much wider on desktop */
+.auth-card {
+  width: 100%;
+  max-width: 1600px; /* wider than before */
+}
+
+/* 3-column details layout (labels on top, values below) */
+.details-inline {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px 24px;
+  padding: 4px 0 8px;
+}
+.details-meta {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 24px;
+  margin-top: 8px;
+}
+.detail-col { min-width: 0; }
+.detail-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.6);
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.detail-value {
+  font-size: 16px;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+/* Ensure action button texts stay on a single line like "Back to accounts" */
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+/* Keep the bottom action buttons on the same row and aligned to the right */
+.bottom-actions {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+.actions .mat-mdc-button-base {
+  white-space: nowrap;
+  min-width: auto; /* prevent extra wide buttons that could cause wrapping */
+}
+.actions .mat-mdc-button-base mat-icon {
+  margin-right: 6px;
+}
+
+@media (max-width: 720px) {
+  .details-inline { grid-template-columns: 1fr; }
+  .details-meta { grid-template-columns: 1fr; }
+  .detail-label { opacity: .9; }
+  .balance-amount { font-size: 26px; }
+}

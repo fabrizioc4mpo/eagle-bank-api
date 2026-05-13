@@ -1,0 +1,36 @@
+:host {
+  display: contents;
+}
+
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.brand {
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+.brand-mark {
+  margin-right: 6px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.app-main {
+  min-height: calc(100dvh - 64px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px 48px;
+  box-sizing: border-box;
+}
+
+.app-footer {
+  margin-top: 40px;
+  color: var(--mat-sys-on-surface-variant);
+  font: var(--mat-sys-body-small);
+}

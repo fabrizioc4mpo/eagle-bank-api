@@ -1,0 +1,46 @@
+<div class="auth-hero">
+  <h1 class="hero-title">Your accounts</h1>
+  <p class="hero-subtitle">Overview of all bank accounts</p>
+</div>
+
+<div class="auth-wrapper">
+  <mat-card class="auth-card">
+    <mat-card-content>
+      <ng-container *ngIf="!loading(); else loadingTpl">
+        <ng-container *ngIf="!error(); else errorTpl">
+          <ng-container *ngIf="accounts().length > 0; else emptyTpl">
+            <mat-nav-list>
+              <a mat-list-item *ngFor="let acc of accounts()" [routerLink]="['/accounts', acc.accountNumber]">
+                <mat-icon matListItemIcon>account_balance</mat-icon>
+                <div matListItemTitle>{{ acc.name }}</div>
+                <div matListItemLine>Acc: {{ acc.accountNumber }} • Sort: {{ acc.sortCode }}</div>
+                <div matListItemMeta>{{ acc.balance | number:'1.2-2' }} {{ acc.currency }}</div>
+              </a>
+            </mat-nav-list>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+
+      <ng-template #loadingTpl>
+        <div class="messages"><div class="msg">Loading accounts…</div></div>
+      </ng-template>
+      <ng-template #errorTpl>
+        <div class="messages"><div class="msg error">{{ error() }}</div></div>
+      </ng-template>
+      <ng-template #emptyTpl>
+        <div class="messages"><div class="msg">You don’t have any accounts yet.</div></div>
+      </ng-template>
+    </mat-card-content>
+
+    <mat-card-actions class="actions" align="end">
+      <a mat-stroked-button color="primary" routerLink="/users/{{ userId }}">
+        <mat-icon>arrow_back</mat-icon>
+        Back to profile
+      </a>
+      <a mat-raised-button color="accent" routerLink="/accounts/new">
+        <mat-icon>add</mat-icon>
+        Create account
+      </a>
+    </mat-card-actions>
+  </mat-card>
+</div>

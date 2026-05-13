@@ -1,0 +1,266 @@
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+
+html {
+  height: 100%;
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+body {
+  // Default the application to a light color theme. This can be changed to
+  // `dark` to enable the dark color theme, or to `light dark` to defer to the
+  // user's system settings.
+  color-scheme: light;
+
+  // Set a default background, font and text colors for the application using
+  // Angular Material's system-level CSS variables. Learn more about these
+  // variables at https://material.angular.dev/guide/system-variables
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+
+  // Reset the user agent margin.
+  margin: 0;
+  height: 100%;
+}
+/* You can add global styles to this file, and also import other style files */
+
+/* Shared auth/layout helpers */
+.auth-wrapper {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.auth-hero {
+  text-align: center;
+  margin: 8px 0 20px;
+}
+
+.hero-title {
+  margin: 0 0 6px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: clamp(32px, 6vw, 52px);
+  line-height: 1.1;
+  letter-spacing: 0.2px;
+}
+
+.hero-subtitle {
+  margin: 0 0 8px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: clamp(20px, 3.4vw, 28px);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.auth-card {
+  padding: 8px 8px 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 720px) {
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+  .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+.messages {
+  margin-top: 12px;
+}
+.msg {
+  border-radius: 6px;
+  padding: 8px 10px;
+  font: var(--mat-sys-body-small);
+}
+.msg.error {
+  background: var(--mat-sys-error-container);
+  color: var(--mat-sys-on-error-container);
+}
+.msg.success {
+  background: var(--mat-sys-tertiary-container);
+  color: var(--mat-sys-on-tertiary-container);
+}
+
+/* Scoped card content sizing is now handled per-component (e.g., Transactions) */
+
+/* Spacing between helper text and action buttons in card footers */
+mat-card-actions.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* adds space between "New here?" and the Sign up button */
+}
+
+/* Dashboard layout */
+.dashboard-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  /* Stretch items so cards can match heights across the row */
+  align-items: stretch;
+}
+
+.profile-col {
+  justify-self: stretch; /* full width on mobile */
+}
+
+.accounts-col {
+  justify-self: stretch;
+}
+
+.accounts-cta {
+  padding: 16px 8px;
+}
+
+/* Make profile and accounts cards fill equal height in their grid row */
+.profile-col mat-card,
+.accounts-col mat-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Center text and buttons inside the accounts card */
+.accounts-col mat-card {
+  align-items: center; /* center the card's internal layout horizontally */
+  text-align: center;
+}
+.accounts-col mat-card .cta-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px 8px; /* lowered header block a bit */
+  box-sizing: border-box;
+  text-align: center;
+}
+.cta-header-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--mat-sys-secondary-container);
+  color: var(--mat-sys-on-secondary-container);
+  margin-right: 12px;
+}
+.cta-header-icon .mat-icon,
+.cta-header-icon mat-icon {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+}
+.cta-header-text .cta-title {
+  margin: 0;
+}
+.cta-subtitle {
+  margin-top: 10px; /* lower the subtitle text */
+  color: var(--mat-sys-on-surface-variant);
+  font: var(--mat-sys-body-medium);
+}
+.accounts-col mat-card mat-card-content {
+  flex: 1 1 auto; /* take remaining height so inner layout can fill space */
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+}
+.accounts-col .cta-actions {
+  justify-content: center; /* center the action buttons row */
+}
+
+.cta-title {
+  margin: 0 0 8px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: clamp(20px, 2.6vw, 28px);
+}
+
+.cta-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Actions row inside the accounts card */
+.cta-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.cta-actions .big-cta { width: 100%; }
+
+/* Fill-space vertical CTA layout: one button at top, one at bottom */
+.cta-fill {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* center buttons vertically in the card */
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+  gap: 16px; /* comfortable spacing between stacked buttons */
+  padding: 8px 0;
+}
+
+.big-cta {
+  padding: 14px 18px !important;
+  font-size: 16px;
+  line-height: 24px;
+  min-height: 56px;
+  justify-content: center;
+}
+
+.big-cta .mat-icon,
+.big-cta mat-icon {
+  margin-right: 8px;
+}
+
+@media (min-width: 960px) {
+  .dashboard-container {
+    grid-template-columns: 520px 1fr; /* profile on the left, actions on the right */
+    gap: 24px;
+  }
+  .profile-col {
+    justify-self: start; /* anchor to the left */
+  }
+  .cta-buttons {
+    flex-direction: row;
+  }
+  .cta-actions {
+    flex-direction: row;
+  }
+  .cta-actions .big-cta { width: auto; }
+  .big-cta {
+    min-width: 220px;
+  }
+}

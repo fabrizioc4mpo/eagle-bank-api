@@ -1,0 +1,23 @@
+/* Ensure delete action text and icon appear red */
+.delete-btn,
+.delete-btn span,
+.delete-btn mat-icon {
+  color: #d32f2f !important; /* Material Red 700 */
+}
+
+.profile-form {
+  margin-top: 8px;
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;
+}
+
+.two-cols > * {
+  flex: 1 1 0;
+}
+
+.w-100 {
+  width: 100%;
+}

@@ -1,0 +1,44 @@
+<div class="auth-hero">
+  <h1 class="hero-title">Welcome to Eagle Bank</h1>
+  <p class="hero-subtitle">“Banking with a sharper vision.”</p>
+</div>
+
+<div class="auth-wrapper">
+  <mat-card class="auth-card">
+    <mat-card-content>
+      <h3 style="margin-top: 0; margin-bottom: 8px; font-weight: 500;">Login</h3>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate autocomplete="off">
+        <!-- Dummy fields to defeat browser autofill on the visible fields below -->
+        <input type="text" style="display:none" autocomplete="username" />
+        <input type="password" style="display:none" autocomplete="current-password" />
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" name="email" placeholder="you@example.com" type="email" autocomplete="email" autocapitalize="none" spellcheck="false" />
+          <mat-error *ngIf="form.controls.email.touched && form.controls.email.invalid">Enter a valid email</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" name="new-password" type="password" placeholder="Your password" autocomplete="new-password" autocapitalize="none" spellcheck="false" />
+          <mat-error *ngIf="form.controls.password.touched && form.controls.password.invalid">Password is required</mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" class="full-width" [disabled]="submitting()">
+          <mat-icon>login</mat-icon>
+          <span>{{ submitting() ? 'Logging in…' : 'Login' }}</span>
+        </button>
+
+        <div class="messages">
+          <div *ngIf="errorMessage()" class="msg error">{{ errorMessage() }}</div>
+          <div *ngIf="successMessage()" class="msg success">{{ successMessage() }}</div>
+        </div>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions align="end" class="actions">
+      <span>New here?</span>
+      <a mat-stroked-button color="accent" routerLink="/signup">Sign up</a>
+    </mat-card-actions>
+  </mat-card>
+</div>

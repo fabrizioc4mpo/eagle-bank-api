@@ -1,0 +1,119 @@
+<div class="auth-hero">
+  <h1 class="hero-title">Transactions</h1>
+  <p class="hero-subtitle">Manage your account and view history</p>
+</div>
+
+<div class="auth-wrapper full-width-wrapper">
+  <mat-card class="auth-card">
+    <mat-card-content class="tx-card-content">
+      <div class="grid-2cols">
+        <!-- Left column: balance + list -->
+        <div class="col">
+          <div class="section-head">
+            <div class="section-title">Account overview</div>
+            <div class="section-sub">Balance and activity</div>
+          </div>
+
+          <!-- Balance section -->
+          <div class="balance-card">
+            <div class="balance-label">Current balance</div>
+            <div class="balance-amount" [class.loading]="loading()">{{ account()?.balance | number:'1.2-2' }} {{ account()?.currency || 'GBP' }}</div>
+            <div class="balance-meta">
+              <div>Account: {{ accountNumber }}</div>
+              <div>Sort code: {{ account()?.sortCode || '-' }}</div>
+            </div>
+            <div class="top-actions">
+              <a mat-stroked-button color="primary" [routerLink]="['/accounts', accountNumber]">
+                <mat-icon>arrow_back</mat-icon>
+                Back to account
+              </a>
+            </div>
+          </div>
+
+          <!-- Transactions list -->
+          <div>
+            <div class="list-header">Transactions</div>
+            <ng-container *ngIf="!loading(); else loadingTpl">
+              <ng-container *ngIf="!error(); else errorTpl">
+                <ng-container *ngIf="transactions()?.length; else emptyTpl">
+                  <div class="table-wrapper">
+                    <table class="tx-table">
+                      <thead>
+                        <tr>
+                          <th>Type</th>
+                          <th class="right">Amount</th>
+                          <th>Reference</th>
+                          <th>Date</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let tx of transactions()">
+                          <td>{{ tx.type | titlecase }}</td>
+                          <td class="right" [class.negative]="tx.type === 'withdrawal'" [class.positive]="tx.type === 'deposit'">
+                            {{ tx.type === 'withdrawal' ? '-' : '+' }}{{ tx.amount | number:'1.2-2' }} {{ tx.currency }}
+                          </td>
+                          <td>{{ tx.reference || '-' }}</td>
+                          <td>{{ tx.createdTimestamp | date:'dd MMM' }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+
+            <ng-template #loadingTpl>
+              <div class="messages"><div class="msg">Loading transactions…</div></div>
+            </ng-template>
+            <ng-template #errorTpl>
+              <div class="messages"><div class="msg error">{{ error() }}</div></div>
+            </ng-template>
+            <ng-template #emptyTpl>
+              <div class="messages"><div class="msg">No transactions found for this account.</div></div>
+            </ng-template>
+          </div>
+        </div>
+
+        <!-- Right column: deposit + withdraw -->
+        <div class="col">
+          <div class="section-head">
+            <div class="section-title">Quick actions</div>
+            <div class="section-sub">Deposit and Withdraw</div>
+          </div>
+
+          <!-- Deposit section -->
+          <form class="tx-form" [formGroup]="depositForm" (ngSubmit)="submitDeposit()">
+            <div class="form-title"><mat-icon>north</mat-icon> Deposit</div>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Amount</mat-label>
+              <input matInput type="number" step="0.01" min="0" formControlName="amount" required>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Reference</mat-label>
+              <input matInput type="text" formControlName="reference" placeholder="e.g. Salary">
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit" [disabled]="depositing() || depositForm.invalid">
+              {{ depositing() ? 'Depositing…' : 'Deposit' }}
+            </button>
+          </form>
+
+          <!-- Withdraw section -->
+          <form class="tx-form" [formGroup]="withdrawForm" (ngSubmit)="submitWithdraw()">
+            <div class="form-title"><mat-icon>south</mat-icon> Withdraw</div>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Amount</mat-label>
+              <input matInput type="number" step="0.01" min="0" formControlName="amount" required>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Reference</mat-label>
+              <input matInput type="text" formControlName="reference" placeholder="e.g. Food">
+            </mat-form-field>
+            <button mat-raised-button color="warn" type="submit" [disabled]="withdrawing() || withdrawForm.invalid">
+              {{ withdrawing() ? 'Withdrawing…' : 'Withdraw' }}
+            </button>
+          </form>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
