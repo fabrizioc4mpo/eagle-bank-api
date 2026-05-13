@@ -37,7 +37,6 @@ public class TransactionService {
                 .orElseThrow(() -> new ResourceNotFoundException("Bank account was not found"));
 
         if (account.getUser() == null || account.getUser().getId() == null || !account.getUser().getId().equals(userId)) {
-            // Follow transaction 403 wording from spec
             throw new AccessDeniedException("The user is not allowed to access the transaction");
         }
 
@@ -58,15 +57,13 @@ public class TransactionService {
             throw new IllegalArgumentException("type is required");
         }
 
-        // Compute new balance with validation
         BigDecimal newBalance;
         if (type == TransactionType.DEPOSIT) {
             newBalance = account.getBalance().add(amount);
-            // Enforce domain upper bound per spec (balance max 10000.00)
             if (newBalance.compareTo(new BigDecimal("10000.00")) > 0) {
                 throw new IllegalArgumentException("Balance cannot exceed 10000.00");
             }
-        } else { // WITHDRAWAL
+        } else {
             if (account.getBalance().compareTo(amount) < 0) {
                 throw new com.eaglebank.backend.exception.InsufficientFundsException("Insufficient funds to process transaction");
             }
@@ -118,7 +115,6 @@ public class TransactionService {
                 .orElseThrow(() -> new ResourceNotFoundException("Bank account was not found"));
 
         if (account.getUser() == null || account.getUser().getId() == null || !account.getUser().getId().equals(userId)) {
-            // For fetch transaction use singular wording per OpenAPI
             throw new org.springframework.security.access.AccessDeniedException("The user is not allowed to access the transaction");
         }
 
@@ -143,7 +139,6 @@ public class TransactionService {
     }
 
     private String generateTransactionId() {
-        // tan- followed by 6 random base62 chars (matches OpenAPI ^tan-[A-Za-z0-9]{6}$)
         final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         StringBuilder sb = new StringBuilder("tan-");
         for (int i = 0; i < 6; i++) {

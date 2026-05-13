@@ -25,7 +25,6 @@ public class AccountController {
     @PostMapping
     public ResponseEntity<BankAccountResponse> createAccount(@Valid @RequestBody CreateBankAccountRequest request,
                                                              Principal principal) {
-        // SecurityConfig already ensures this endpoint requires authentication
         String userId = principal.getName();
         BankAccountResponse response = accountService.createAccount(userId, request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);

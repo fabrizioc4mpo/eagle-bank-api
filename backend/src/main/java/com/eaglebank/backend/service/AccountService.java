@@ -29,8 +29,6 @@ public class AccountService {
 
     private final BankAccountRepository bankAccountRepository;
     private final UserRepository userRepository;
-    // Keep TransactionRepository to preserve constructor signature for existing tests (unused here after refactor)
-    //private final TransactionRepository transactionRepository;
 
     private final SecureRandom random = new SecureRandom();
 
@@ -116,7 +114,6 @@ public class AccountService {
 
 
     private String generateUniqueAccountNumber() {
-        // Must match ^01\d{6}$
         for (int i = 0; i < 1000; i++) {
             int suffix = random.nextInt(1_000_000); // 0..999999
             String candidate = String.format("01%06d", suffix);

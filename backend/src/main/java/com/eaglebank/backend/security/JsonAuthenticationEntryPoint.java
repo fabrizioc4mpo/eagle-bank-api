@@ -17,7 +17,6 @@ public class JsonAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 
-        // Minimal JSON to satisfy ErrorResponse schema without requiring Jackson
         String json = "{\"message\":\"Access token is missing or invalid\"}";
         response.getWriter().write(json);
     }

@@ -15,7 +15,6 @@ public enum AccountType {
     public static AccountType fromJson(String value) {
         if (value == null) return null;
         if ("personal".equalsIgnoreCase(value)) return PERSONAL;
-        //add tooltip in ui
         throw new IllegalArgumentException("Unsupported account type: " + value);
     }
 }

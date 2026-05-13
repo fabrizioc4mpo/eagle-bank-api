@@ -20,10 +20,10 @@ public class BankAccount {
 
     @Id
     @Pattern(regexp = "^01\\d{6}$", message = "must match ^01\\d{6}$")
-    private String accountNumber; // must match ^01\d{6}$
+    private String accountNumber;
 
     @Column(nullable = false)
-    private String sortCode; // e.g. 10-10-10
+    private String sortCode;
 
     @Column(nullable = false)
     private String name;
@@ -36,7 +36,7 @@ public class BankAccount {
     private BigDecimal balance;
 
     @Column(nullable = false)
-    private String currency; // e.g. GBP
+    private String currency;
 
     @CreationTimestamp
     @Column(updatable = false)

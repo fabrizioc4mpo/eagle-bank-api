@@ -52,13 +52,11 @@ export class LoginComponent {
     this.http.post<{ token: string }>(`/v1/auth/login`, { email, password })
       .subscribe({
         next: (res) => {
-          // Store token for subsequent requests
           try {
             localStorage.setItem('auth_token', res.token);
           } catch {}
           this.successMessage.set('Logged in successfully');
           this.submitting.set(false);
-          // Decode JWT to extract userId (sub) and navigate to profile route
           try {
             const payload = JSON.parse(atob(res.token.split('.')[1] || '')) as { sub?: string };
             const userId = payload?.sub;

@@ -25,6 +25,5 @@ public class UpdateUserRequest {
     @Valid
     private AddressDto address; // If provided, must satisfy AddressDto validations
 
-    // Allow password change; when provided it will be encoded
     private String password;
 }

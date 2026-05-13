@@ -28,14 +28,12 @@ public class UserController {
             @PathVariable String userId,
             Principal principal) {
 
-        // 2. Check if user exists (business rule)
         var user = userService.getUserById(userId);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new ErrorResponse("User not found"));
         }
 
-        // 1. Check ownership FIRST (security rule)
         if (principal != null && !principal.getName().equals(userId)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body(new ErrorResponse("You are not allowed to access this resource"));
@@ -71,7 +69,7 @@ public class UserController {
             @jakarta.validation.constraints.Pattern(regexp = "^usr-[A-Za-z0-9]+$", message = "userId must match ^usr-[A-Za-z0-9]+$")
             @PathVariable String userId,
             Principal principal) {
-        // 1. Check existence FIRST
+
         var user = userService.getUserById(userId);
 
         if (user == null) {
@@ -79,19 +77,16 @@ public class UserController {
                     .body(new ErrorResponse("User not found"));
         }
 
-        // 2. Check ownership
         if (!principal.getName().equals(userId)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body(new ErrorResponse("You are not allowed to access this resource"));
         }
 
-        // 3. Check bank accounts
         if (userService.hasBankAccounts(userId)) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body(new ErrorResponse("User cannot be deleted when associated with bank accounts"));
         }
 
-        // 4. Delete
         userService.deleteUserById(userId);
 
         return ResponseEntity.noContent().build();

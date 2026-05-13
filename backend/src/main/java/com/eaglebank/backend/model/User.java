@@ -18,7 +18,7 @@ import com.eaglebank.backend.util.CustomIdGenerator;
 @Builder
 public class User {
     @Id
-    private String id; // format: usr-abc123
+    private String id;
 
     @Column(nullable = false)
     private String name;
@@ -33,7 +33,7 @@ public class User {
     private String phoneNumber;
 
     @Column(nullable = false)
-    private String password; // Hashed password
+    private String password;
 
     @CreationTimestamp
     @Column(updatable = false)

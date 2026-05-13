@@ -74,7 +74,6 @@ export class SignupComponent {
     this.submitting.set(true);
     this.http.post('/v1/users', payload).subscribe({
       next: () => {
-        // Immediately log in to get a token
         this.http.post<{ token: string }>(`/v1/auth/login`, { email: v.email, password: v.password })
           .subscribe({
             next: (res) => {
@@ -87,7 +86,6 @@ export class SignupComponent {
               const msg = err?.error?.message || 'Account created, but auto-login failed. Please log in.';
               this.errorMessage.set(msg);
               this.submitting.set(false);
-              // Optionally navigate to login
               // this.router.navigateByUrl('/login');
             }
           });

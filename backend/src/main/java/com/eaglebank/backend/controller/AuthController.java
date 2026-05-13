@@ -39,14 +39,12 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody CreateUserRequest request) {
-        // Check email uniqueness before creating
         User existing = userService.findByEmail(request.getEmail());
         if (existing != null) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body(new ErrorResponse("Email already in use"));
         }
 
-        // Create the user (password is hashed inside the service)
         var created = userService.registerUser(request);
 
         return ResponseEntity.status(HttpStatus.CREATED)

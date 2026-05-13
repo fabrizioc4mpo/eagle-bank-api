@@ -14,7 +14,7 @@ type TransactionResponse = {
   id: string;
   type: 'deposit' | 'withdrawal' | string;
   amount: number;
-  currency: string; // GBP
+  currency: string;
   reference?: string;
   userId: string;
   createdTimestamp: string;
@@ -28,7 +28,7 @@ type BankAccountResponse = {
   name: string;
   accountType: string;
   balance: number;
-  currency: string; // GBP
+  currency: string;
   createdTimestamp: string;
   updatedTimestamp: string;
   userId?: string;
