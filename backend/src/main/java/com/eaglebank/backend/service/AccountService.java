@@ -9,7 +9,6 @@ import com.eaglebank.backend.model.BankAccount;
 import com.eaglebank.backend.model.User;
 import com.eaglebank.backend.repository.BankAccountRepository;
 import com.eaglebank.backend.repository.UserRepository;
-import com.eaglebank.backend.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
