@@ -114,7 +114,7 @@ All errors follow OpenAPI specification:
 
 ## Clone repository
 
-git clone <repo-url>
+git clone https://github.com/fabrizioc4mpo/eagle-bank-api
 
 ---
 
