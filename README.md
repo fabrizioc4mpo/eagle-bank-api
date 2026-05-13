@@ -126,9 +126,12 @@ CREATE DATABASE eagle_bank;
 
 Update `application.properties`:
 
-spring.datasource.url=jdbc:postgresql://localhost:5432/eagle_bank
-spring.datasource.username=postgres
-spring.datasource.password=password 
+### Database credentials are expected to be configured locally:
+
+- spring.datasource.url=jdbc:postgresql://localhost:5432/eagle_bank 
+- spring.datasource.username=${DB_USERNAME:postgres} 
+- spring.datasource.password=${DB_PASSWORD:password}
+
 ---
 
 ## Run backend
@@ -183,14 +186,26 @@ Example response:
 
 ---
 
+## API Testing:
+### To simplify testing and reviewing the API, a Postman collection has been included in this repository.
+Location: /postman/EagleBankAPI.postman_collection.json
+
+### How to use it
+- Open Postman
+- Click Import 
+- Select the file:
+postman/eagle-bank.postman_collection.json
+- Try to run the collection or test individual endpoints,
+- Make sure user is created and authenticated to call specific endpoints
+
 ## Path Parameter Validation
 
 
-| Parameter | Pattern | Example |
-|---|---|---|
-| `accountNumber` | `^01\d{6}$` | `01234567` |
-| `transactionId` | `^tan-[A-Za-z0-9]{6}$` | `tan-123abc` |
-| `userId` | `^usr-[A-Za-z0-9]+$` | `usr-abc123` |
+| Parameter | Pattern | Example          |
+|---|---|------------------|
+| `accountNumber` | `^01\d{6}$` | `01234567`       |
+| `transactionId` | `^tan-[A-Za-z0-9]{6}$` | `tan-123abc`     |
+| `userId` | `^usr-[A-Za-z0-9]+$` | `usr-abcde12345` |
 
 ---
 
@@ -234,6 +249,8 @@ The project follows a layered architecture:
 
 - Refresh tokens
 - Full test coverage
+- Optimistic locking
+- Role-based authorization
 - Additional type of users (e.g., Premium users, Admins, etc.)
 - Additional type of accounts (e.g., Joint accounts, Savings accounts, etc.)
 - Assign debit card to each account
