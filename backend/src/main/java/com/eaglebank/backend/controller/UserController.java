@@ -45,10 +45,10 @@ public class UserController {
 
     @PatchMapping("/{userId}")
     public ResponseEntity<?> updateUser(
-                                        @jakarta.validation.constraints.Pattern(regexp = "^usr-[A-Za-z0-9]+$", message = "userId must match ^usr-[A-Za-z0-9]+$")
-                                        @PathVariable String userId,
-                                        @Valid @RequestBody UpdateUserRequest request,
-                                        Principal principal) {
+            @jakarta.validation.constraints.Pattern(regexp = "^usr-[A-Za-z0-9]+$", message = "userId must match ^usr-[A-Za-z0-9]+$")
+            @PathVariable String userId,
+            @Valid @RequestBody UpdateUserRequest request,
+            Principal principal) {
 
         var user = userService.getUserById(userId);
 

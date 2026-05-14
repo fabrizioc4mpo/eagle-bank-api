@@ -49,7 +49,6 @@ public class GlobalExceptionHandler {
     private String mapErrorType(FieldError fe) {
         String code = fe.getCode();
         if (code == null) return "invalid";
-        // Common Bean Validation/Spring codes mapping
         switch (code) {
             case "NotNull":
             case "NotBlank":
@@ -70,14 +69,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException ex) {
-        // Client supplied invalid input (e.g., unsupported enum value)
+        // Client supplied invalid input
         String message = ex.getMessage() != null ? ex.getMessage() : "Invalid request";
         return new ResponseEntity<>(new ErrorResponse(message), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorResponse> handleNotReadable(HttpMessageNotReadableException ex) {
-        // Triggered by JSON parse/bind errors (e.g., invalid enum). Map to 400 with a helpful message.
+        // Triggered by JSON parse/bind errors. Map to 400 with a helpful message.
         Throwable cause = ex.getMostSpecificCause();
         if (cause instanceof IllegalArgumentException) {
             String message = cause.getMessage() != null ? cause.getMessage() : "Invalid request payload";
